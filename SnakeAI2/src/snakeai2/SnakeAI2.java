@@ -78,6 +78,10 @@ public class SnakeAI2 extends PApplet{
 				for (int i = 0; i < input; i++)
 				{
 					RunAI();
+					if(i%100 == 0)
+					{
+						println(i);
+					}
 				}
 				for (Snek s: snake)
 				{
@@ -162,7 +166,7 @@ public class SnakeAI2 extends PApplet{
 				snake[i].collision();
 				snake[i].rewardSnake();
 			}
-			println(i);
+			//println(i);
 			//println("calculated snake: " + i);
 		}
 		//println("calculated all snakes");
@@ -391,7 +395,7 @@ public class SnakeAI2 extends PApplet{
 				{
 					for (int j = 0; j < 964; j++)
 					{
-						behaviour[i][j] = random(0,1);
+						behaviour[i][j] = random(0,2);
 						//println(behaviour[i][j]);
 					}
 				}
@@ -408,7 +412,7 @@ public class SnakeAI2 extends PApplet{
 					{
 						three = (int) random(0,3);
 						ninehundred = (int) random(0,964);
-						behaviour[three][ninehundred] += random(0,1);
+						behaviour[three][ninehundred] += random(0,2);
 					}
 				}
 				//println(behaviour[three][ninehundred]);
@@ -488,14 +492,14 @@ public class SnakeAI2 extends PApplet{
 					//apple
 					if (apple.appleX/20 == i-1 && apple.appleY/20 == j-1)
 					{
-						inputs[inp] = 1;
+						inputs[inp] = 0;
 					}
 					else
 					{
 						//Walls/border
 						if (i-1 == 30 || i-1 == 0 || j-1 == 30 || j-1 == 0)
 						{
-							inputs[inp] = 0;
+							inputs[inp] = 1;
 							//println("Cost: " + cost + " something is at: " + inp);
 						}
 						else
@@ -503,23 +507,24 @@ public class SnakeAI2 extends PApplet{
 							//own tail
 							for (int g = 0; g < tailLength; g++)
 							{
+								//head
 								if (i-1 == tailX[0]/20 && j-1 == tailY[0]/20)
 								{
-									inputs[inp] = 1;
+									inputs[inp] = 0;
 									//break;
 								}
 								else
 								{
 									if (i-1 == tailX[g]/20 && j-1 == tailY[g]/20)
 									{
-										inputs[inp] = 0;
+										inputs[inp] = 1;
 										//println("Cost: " + cost + " something is at: " + inp);
 										//break;
 									}
 									//open space
 									else
 									{
-										inputs[inp] = 1;
+										inputs[inp] = 0;
 										break;
 									}
 								}
